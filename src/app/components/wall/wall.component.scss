@@ -1,0 +1,14 @@
+.message {
+    position: absolute;
+    white-space: nowrap;
+}
+
+.full-area {
+  width: 100%;
+  height: 100%;
+}
+
+.ignore-text {
+  pointer-events: none;
+  user-select: none;
+}
