@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, signal, ViewChild } from '@angular/cor
 import { MessagesService } from '../../services/messages.service';
 import { addCoordinates, Coordinates, getCoordinatesLength, Message, substractCoordinates } from '../../models/message.model';
 import { MessageInputComponent } from '../message-input/message-input.component';
+import { getCursorCoordinates } from '../../util/mouse-touchpad.util';
 
 @Component({
   selector: 'app-wall',
@@ -27,29 +28,28 @@ export class WallComponent implements OnInit {
 
   ngOnInit(): void {
     this.messagesService.getMessages().subscribe((messages:any)=>{
-      console.log(messages)
       this.messages.set(messages);
     })
   }
 
-  onMouseDown(event: MouseEvent) {
+  onMouseDown(event: MouseEvent | TouchEvent) {
     this.mousePressed = true;
-    this.mouseInitPosition = { x: event.pageX, y: event.pageY }
+    this.mouseInitPosition = getCursorCoordinates(event)
   }
   
-  onClick(event: MouseEvent) {
+  onMouseUp(event: MouseEvent | TouchEvent) {
     this.mousePressed = false;
     this.currentPosition = this.draggedPosition
     if(!this.mouseDragging) {
-      this.messageInputPosition = substractCoordinates({ x: event.pageX, y: event.pageY }, this.currentPosition)
+      this.messageInputPosition = substractCoordinates(getCursorCoordinates(event), this.currentPosition)
     }
     this.mouseDragging = false
     this.mouseInitPosition = null
   }
 
-  onMouseMove(event: MouseEvent) {
+  onMouseMove(event: MouseEvent | TouchEvent) {
     if(this.mousePressed) {
-      const mouseMovement = substractCoordinates({ x: event.pageX, y: event.pageY }, this.mouseInitPosition!) 
+      const mouseMovement = substractCoordinates(getCursorCoordinates(event), this.mouseInitPosition!) 
       if(getCoordinatesLength(mouseMovement) > 10) {
         this.mouseDragging = true
         this.draggedPosition = addCoordinates(this.currentPosition, mouseMovement)
@@ -57,11 +57,12 @@ export class WallComponent implements OnInit {
         this.mouseDragging = false
       }
     }
+    event.preventDefault();
   }
 
   public onAddMessage(message: string) {
     const newMessage = {
-      id: this.messages.length,
+      id: this.messages().length+1,
       text: message,
       coordinates: this.messageInputPosition!
     }
@@ -73,9 +74,4 @@ export class WallComponent implements OnInit {
     this.messagesService.addMessage(newMessage).subscribe()
     this.messageInputPosition = null
   }
-
-  // @HostListener('window:keydown', ['$event'])
-  // handleKeyboardEvent(event: KeyboardEvent) {
-  //   console.log('Global key pressed:', event.key);
-  // }
 }

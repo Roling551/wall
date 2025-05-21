@@ -1,8 +1,11 @@
-
 <div
-    (mouseup)="onClick($event)"
-    (mousemove)="onMouseMove($event)"
     (mousedown)="onMouseDown($event)"
+    (mousemove)="onMouseMove($event)"
+    (mouseup)="onMouseUp($event)"
+    
+    (touchstart)="onMouseDown($event)"
+    (touchmove)="onMouseMove($event)"
+    (touchend)="onMouseUp($event)"
     class="full-area"
 >
     @for (message of messages(); track message.id) {

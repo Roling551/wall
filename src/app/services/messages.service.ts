@@ -3,7 +3,7 @@ import { Message } from "../models/message.model";
 import { delay, map, Observable, of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { DtoMessage, toDtoMessage, toMessage } from "../components/dto/message.dto";
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment.prod";
 
 
 @Injectable({

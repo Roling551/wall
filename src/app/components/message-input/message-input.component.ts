@@ -13,11 +13,7 @@ export class MessageInputComponent implements AfterViewInit {
   addMessage = output<string>()
   coordinates? : Coordinates
 
-  public onClick(event:MouseEvent) {
-    event.stopPropagation();
-  }
-
-  public onMouseDown(event:MouseEvent) {
+  public stopPropagation(event:MouseEvent) {
     event.stopPropagation();
   }
 

@@ -1,8 +1,8 @@
 <form
     (ngSubmit)="onSubmit(messageInput.value)"
-    (mousedown)="onMouseDown($event)"
-    (mouseup)="onClick($event)"
+    (mousedown)="stopPropagation($event)"
+    (mouseup)="stopPropagation($event)"
+    (click)="stopPropagation($event)"
 >
-    <input type="text" placeholder="Enter text" #messageInput>
-    <button type="submit">></button>
+    <input type="text" placeholder="Write anything" #messageInput>
 </form>
