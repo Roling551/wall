@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiBaseUrl: 'https://rzylan-wall-be.loca.lt'
+    apiBaseUrl: 'https://rzylan-wall-fe.loca.lt/api'
 };
