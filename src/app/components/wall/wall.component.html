@@ -5,19 +5,10 @@
         messageInputPosition:messageInputPosition()
     }"
     class="full-area"
-    (click)="onClick($event)">
+    (draggeableClick)="onClick($event)">
 </app-draggeable>
 
 <ng-template #planeContent let-data="data">
-    @if (data.messageInputPosition) {
-        <app-message-input
-            class="message" 
-            [style.left.px]="data.messageInputPosition.x"
-            [style.top.px]="data.messageInputPosition.y"
-            (addMessage)="onAddMessage($event)"
-            [setCoordinates]="data.messageInputPosition"
-        />
-    }
     @for (message of data.messages; track message.id) {
         <div
             class="message ignore-text"
@@ -27,5 +18,15 @@
         >
             {{ message.text }}
         </div>
+    }
+    @if (data.messageInputPosition) {
+        <app-message-input
+            class="message" 
+            [style.left.px]="data.messageInputPosition.x"
+            [style.top.px]="data.messageInputPosition.y"
+            (addMessage)="onAddMessage($event)"
+            [setCoordinates]="data.messageInputPosition"
+            style="position: absolute;"
+        />
     }
 </ng-template>

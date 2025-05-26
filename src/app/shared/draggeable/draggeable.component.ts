@@ -14,7 +14,7 @@ export class DraggeableComponent {
   @Input() template!: TemplateRef<any>;
   @Input() data: any = {};
 
-  click = output<Coordinates>()
+  draggeableClick = output<Coordinates>()
 
   currentPosition: Coordinates = {x:0, y:0}
   draggedPosition: Coordinates = {x:0, y:0}
@@ -34,7 +34,8 @@ export class DraggeableComponent {
     this.mousePressed = false;
     this.currentPosition = this.draggedPosition
     if(!this.mouseDragging) {
-      this.click.emit(substractCoordinates(getCursorCoordinates(event), this.currentPosition));
+      const clickedCoordinates = substractCoordinates(getCursorCoordinates(event), this.currentPosition)
+      this.draggeableClick.emit(clickedCoordinates);
     }
     this.mouseDragging = false
     this.mouseInitPosition = null
