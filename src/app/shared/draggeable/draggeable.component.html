@@ -1,0 +1,13 @@
+<div
+    (mousedown)="onMouseDown($event)"
+    (mousemove)="onMouseMove($event)"
+    (mouseup)="onMouseUp($event)"
+    
+    (touchstart)="onMouseDown($event)"
+    (touchmove)="onMouseMove($event)"
+    (touchend)="onMouseUp($event)"
+    class="full-area"
+    [style.transform]="transform"
+>
+  <ng-container *ngTemplateOutlet="template; context: context"></ng-container>
+</div>

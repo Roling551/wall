@@ -1,29 +1,31 @@
-<div
-    (mousedown)="onMouseDown($event)"
-    (mousemove)="onMouseMove($event)"
-    (mouseup)="onMouseUp($event)"
-    
-    (touchstart)="onMouseDown($event)"
-    (touchmove)="onMouseMove($event)"
-    (touchend)="onMouseUp($event)"
+<app-draggeable
+    [template]="planeContent"
+    [data]="{
+        messages:messages(),
+        messageInputPosition:messageInputPosition()
+    }"
     class="full-area"
->
-    @for (message of messages(); track message.id) {
-        <div 
-            class="message ignore-text" 
-            [style.left.px]="message.coordinates.x + draggedPosition.x"
-            [style.top.px]="message.coordinates.y + draggedPosition.y"
+    (click)="onClick($event)">
+</app-draggeable>
+
+<ng-template #planeContent let-data="data">
+    @if (data.messageInputPosition) {
+        <app-message-input
+            class="message" 
+            [style.left.px]="data.messageInputPosition.x"
+            [style.top.px]="data.messageInputPosition.y"
+            (addMessage)="onAddMessage($event)"
+            [setCoordinates]="data.messageInputPosition"
+        />
+    }
+    @for (message of data.messages; track message.id) {
+        <div
+            class="message ignore-text"
+            [style.left.px]="message.coordinates.x"
+            [style.top.px]="message.coordinates.y"
+            style="position: absolute;"
         >
             {{ message.text }}
         </div>
     }
-    @if (messageInputPosition) {
-        <app-message-input
-            class="message" 
-            [style.left.px]="messageInputPosition.x + draggedPosition.x"
-            [style.top.px]="messageInputPosition.y + draggedPosition.y"
-            (addMessage)="onAddMessage($event)"
-            [setCoordinates]="messageInputPosition"
-        />
-    }
-</div>
+</ng-template>
