@@ -28,7 +28,6 @@ export class WallComponent implements OnInit {
   }
 
   public onClick(position: Coordinates) {
-    console.log("test")
     this.messageInputPosition.set(position);
   }
 

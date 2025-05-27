@@ -31,13 +31,13 @@ export class DraggeableComponent {
   }
   
   onMouseUp(event: MouseEvent | TouchEvent) {
-    this.mousePressed = false;
     this.currentPosition = this.draggedPosition
-    if(!this.mouseDragging) {
+    if(!this.mouseDragging && this.mousePressed) {
       const clickedCoordinates = substractCoordinates(getCursorCoordinates(event), this.currentPosition)
       this.draggeableClick.emit(clickedCoordinates);
     }
     this.mouseDragging = false
+    this.mousePressed = false;
     this.mouseInitPosition = null
   }
 
